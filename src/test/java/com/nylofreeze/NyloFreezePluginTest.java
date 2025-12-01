@@ -1,13 +1,14 @@
-package com.example;
+package com.nylofreeze;
+
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
-public class ExamplePluginTest
+public class NyloFreezePluginTest
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(ExamplePlugin.class);
+		ExternalPluginManager.loadBuiltin(NyloFreezePlugin.class);
 		RuneLite.main(args);
 	}
 }

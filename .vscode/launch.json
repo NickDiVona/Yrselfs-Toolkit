@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Current File",
+      "request": "launch",
+      "mainClass": "${file}",
+      "vmArgs": "-ea"
+    },
+    {
+      "type": "java",
+      "name": "NyloFreezePluginTest",
+      "request": "launch",
+      "mainClass": "com.nylofreeze.NyloFreezePluginTest",
+      "projectName": "tob-maiden-nylo-freeze-chance",
+      "vmArgs": "-ea"
+    }
+  ]
+}
