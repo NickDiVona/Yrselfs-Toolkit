@@ -10,7 +10,7 @@ public interface NyloFreezeConfig extends Config
 	@ConfigItem(
 		keyName = "showPercentage",
 		name = "Show Percentage",
-		description = "Display the freeze chance percentage on the overlay"
+		description = "Display the freeze chance percentage in an infobox"
 	)
 	default boolean showPercentage()
 	{
