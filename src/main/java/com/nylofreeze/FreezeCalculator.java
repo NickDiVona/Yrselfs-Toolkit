@@ -25,17 +25,17 @@ public class FreezeCalculator {
 	 * Calculate the freeze chance percentage against Nylocas Matomenos
 	 */
 	public int calculateFreezeChance() {
+		// Use BOOSTED magic level (includes potions, brews, etc.)
 		int baseMagicLevel = client.getBoostedSkillLevel(Skill.MAGIC);
 		int equipmentBonus = getEquipmentMagicBonus();
-		boolean hasAugury = client.isPrayerActive(Prayer.AUGURY);
+
+		// Check all magic prayers, not just Augury
+		double prayerMultiplier = getMagicPrayerMultiplier();
 		boolean hasEliteVoid = hasEliteVoidSet();
 
 		// Calculate effective magic level
 		// Step 1: Apply prayer bonus to base level FIRST
-		double effectiveLevel = baseMagicLevel;
-		if (hasAugury) {
-			effectiveLevel = Math.floor(baseMagicLevel * 1.25); // Augury = +25%
-		}
+		double effectiveLevel = Math.floor(baseMagicLevel * prayerMultiplier);
 
 		// Step 2: Add invisible +9 boost
 		effectiveLevel += 9;
@@ -54,6 +54,7 @@ public class FreezeCalculator {
 
 		// Calculate required roll for 100% freeze
 		// Formula from wiki: (Base Magic Level + 9) * 204
+		// Note: Use the CURRENT boosted level, not base 99
 		int requiredRoll = (baseMagicLevel + 9) * 204;
 
 		// Calculate freeze chance
@@ -63,6 +64,24 @@ public class FreezeCalculator {
 
 		// Below threshold, calculate percentage
 		return (int) Math.min(100, (accuracyRoll / requiredRoll) * 100);
+	}
+
+	/**
+	 * Get the magic prayer multiplier based on active prayers
+	 */
+	private double getMagicPrayerMultiplier() {
+		// Check prayers in order of strength (highest first)
+		if (client.isPrayerActive(Prayer.AUGURY)) {
+			return 1.25; // +25%
+		} else if (client.isPrayerActive(Prayer.MYSTIC_MIGHT)) {
+			return 1.15; // +15%
+		} else if (client.isPrayerActive(Prayer.MYSTIC_LORE)) {
+			return 1.10; // +10%
+		} else if (client.isPrayerActive(Prayer.MYSTIC_WILL)) {
+			return 1.05; // +5%
+		}
+
+		return 1.0; // No prayer active
 	}
 
 	/**

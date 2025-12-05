@@ -4,12 +4,12 @@ import com.google.inject.Provides;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
+import net.runelite.api.events.GameTick;
+import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.config.ConfigManager;
-import net.runelite.client.game.SpriteManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import net.runelite.client.util.ImageUtil;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -60,6 +60,15 @@ public class NyloFreezePlugin extends Plugin {
         if (infoBox != null) {
             infoBoxManager.removeInfoBox(infoBox);
             infoBox = null;
+        }
+    }
+
+    @Subscribe
+    public void onGameTick(GameTick event) {
+        // Force the InfoBox to update every game tick
+        // This makes it recalculate when gear/prayers/potions change
+        if (infoBox != null) {
+            infoBox.update();
         }
     }
 

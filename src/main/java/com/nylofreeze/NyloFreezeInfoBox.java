@@ -17,11 +17,15 @@ public class NyloFreezeInfoBox extends InfoBox {
 		this.freezeChance = 0;
 	}
 
+	/**
+	 * Update the freeze chance calculation
+	 */
+	public void update() {
+		freezeChance = freezeCalculator.calculateFreezeChance();
+	}
+
 	@Override
 	public String getText() {
-		// Update freeze chance
-		freezeChance = freezeCalculator.calculateFreezeChance();
-
 		// Show percentage if config enabled
 		if (config.showPercentage()) {
 			return freezeChance + "%";
