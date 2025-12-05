@@ -31,11 +31,7 @@ public class FreezeCalculator {
 		int realMagicLevel = client.getRealSkillLevel(Skill.MAGIC);
 		int equipmentBonus = getEquipmentMagicBonus();
 
-		// Debug logging
-		System.out.println(
-				"Magic Level - Boosted: " + boostedMagicLevel + ", Real: " + realMagicLevel + ", Equipment: " + equipmentBonus);
-
-		// Check all magic prayers, not just Augury
+		// Check all magic prayers
 		double prayerMultiplier = getMagicPrayerMultiplier();
 		boolean hasEliteVoid = hasEliteVoidSet();
 
@@ -62,15 +58,13 @@ public class FreezeCalculator {
 		// Formula from wiki: (Base Magic Level + 9) * 204
 		int requiredRoll = (realMagicLevel + 9) * 204;
 
-		int freezeChance = (int) Math.min(100, (accuracyRoll / requiredRoll) * 100);
-
 		// Calculate freeze chance
 		if (accuracyRoll >= requiredRoll) {
 			return 100;
 		}
 
 		// Below threshold, calculate percentage
-		return freezeChance;
+		return (int) Math.min(100, (accuracyRoll / requiredRoll) * 100);
 	}
 
 	/**
@@ -78,18 +72,26 @@ public class FreezeCalculator {
 	 */
 	private double getMagicPrayerMultiplier() {
 		// Check prayers in order of strength (highest first)
-		// TODO: Handle Mystic Vigour
-		if (client.isPrayerActive(Prayer.AUGURY)) {
+		if (isPrayerActive(Prayer.AUGURY)) {
 			return 1.25; // +25%
-		} else if (client.isPrayerActive(Prayer.MYSTIC_MIGHT)) {
+		} else if (isPrayerActive(Prayer.MYSTIC_VIGOUR)) {
+			return 1.18; // +18%
+		} else if (isPrayerActive(Prayer.MYSTIC_MIGHT)) {
 			return 1.15; // +15%
-		} else if (client.isPrayerActive(Prayer.MYSTIC_LORE)) {
+		} else if (isPrayerActive(Prayer.MYSTIC_LORE)) {
 			return 1.10; // +10%
-		} else if (client.isPrayerActive(Prayer.MYSTIC_WILL)) {
+		} else if (isPrayerActive(Prayer.MYSTIC_WILL)) {
 			return 1.05; // +5%
 		}
 
 		return 1.0; // No prayer active
+	}
+
+	/**
+	 * Check if a prayer is active
+	 */
+	private boolean isPrayerActive(Prayer prayer) {
+		return client.getVarbitValue(prayer.getVarbit()) == 1;
 	}
 
 	/**
