@@ -25,17 +25,23 @@ public class FreezeCalculator {
 	 * Calculate the freeze chance percentage against Nylocas Matomenos
 	 */
 	public int calculateFreezeChance() {
-		// Use BOOSTED magic level (includes potions, brews, etc.)
-		int baseMagicLevel = client.getBoostedSkillLevel(Skill.MAGIC);
+		// Use BOOSTED magic level for calculations
+		int boostedMagicLevel = client.getBoostedSkillLevel(Skill.MAGIC);
+		// Use REAL magic level for the required roll threshold
+		int realMagicLevel = client.getRealSkillLevel(Skill.MAGIC);
 		int equipmentBonus = getEquipmentMagicBonus();
+
+		// Debug logging
+		System.out.println(
+				"Magic Level - Boosted: " + boostedMagicLevel + ", Real: " + realMagicLevel + ", Equipment: " + equipmentBonus);
 
 		// Check all magic prayers, not just Augury
 		double prayerMultiplier = getMagicPrayerMultiplier();
 		boolean hasEliteVoid = hasEliteVoidSet();
 
-		// Calculate effective magic level
-		// Step 1: Apply prayer bonus to base level FIRST
-		double effectiveLevel = Math.floor(baseMagicLevel * prayerMultiplier);
+		// Calculate effective magic level using BOOSTED level
+		// Step 1: Apply prayer bonus to boosted level FIRST
+		double effectiveLevel = Math.floor(boostedMagicLevel * prayerMultiplier);
 
 		// Step 2: Add invisible +9 boost
 		effectiveLevel += 9;
@@ -52,10 +58,11 @@ public class FreezeCalculator {
 			accuracyRoll = effectiveLevel * (equipmentBonus + 64);
 		}
 
-		// Calculate required roll for 100% freeze
+		// Calculate required roll for 100% freeze using REAL magic level
 		// Formula from wiki: (Base Magic Level + 9) * 204
-		// Note: Use the CURRENT boosted level, not base 99
-		int requiredRoll = (baseMagicLevel + 9) * 204;
+		int requiredRoll = (realMagicLevel + 9) * 204;
+
+		int freezeChance = (int) Math.min(100, (accuracyRoll / requiredRoll) * 100);
 
 		// Calculate freeze chance
 		if (accuracyRoll >= requiredRoll) {
@@ -63,7 +70,7 @@ public class FreezeCalculator {
 		}
 
 		// Below threshold, calculate percentage
-		return (int) Math.min(100, (accuracyRoll / requiredRoll) * 100);
+		return freezeChance;
 	}
 
 	/**
@@ -71,6 +78,7 @@ public class FreezeCalculator {
 	 */
 	private double getMagicPrayerMultiplier() {
 		// Check prayers in order of strength (highest first)
+		// TODO: Handle Mystic Vigour
 		if (client.isPrayerActive(Prayer.AUGURY)) {
 			return 1.25; // +25%
 		} else if (client.isPrayerActive(Prayer.MYSTIC_MIGHT)) {
