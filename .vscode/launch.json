@@ -10,10 +10,10 @@
     },
     {
       "type": "java",
-      "name": "NyloFreezePluginTest",
+      "name": "Yrself's Toolkit",
       "request": "launch",
-      "mainClass": "com.nylofreeze.NyloFreezePluginTest",
-      "projectName": "tob-maiden-nylo-freeze-chance",
+      "mainClass": "com.yrselfs.YrselfsToolkitPluginTest",
+      "projectName": "yrselfs-toolkit",
       "vmArgs": "-ea"
     }
   ]
