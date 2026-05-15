@@ -8,8 +8,8 @@ import net.runelite.api.ItemContainer;
 import net.runelite.api.Prayer;
 import net.runelite.api.Skill;
 import net.runelite.client.game.ItemManager;
-import net.runelite.http.api.item.ItemEquipmentStats;
-import net.runelite.http.api.item.ItemStats;
+import net.runelite.client.game.ItemEquipmentStats;
+import net.runelite.client.game.ItemStats;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -86,7 +86,7 @@ public class FreezeCalculator {
 	}
 
 	private int getMagicBonusForItem(int itemId) {
-		ItemStats itemStats = itemManager.getItemStats(itemId, false);
+		ItemStats itemStats = itemManager.getItemStats(itemId);
 		if (itemStats == null) {
 			return 0;
 		}

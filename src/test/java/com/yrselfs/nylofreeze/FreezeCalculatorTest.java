@@ -8,8 +8,8 @@ import net.runelite.api.ItemContainer;
 import net.runelite.api.Prayer;
 import net.runelite.api.Skill;
 import net.runelite.client.game.ItemManager;
-import net.runelite.http.api.item.ItemEquipmentStats;
-import net.runelite.http.api.item.ItemStats;
+import net.runelite.client.game.ItemEquipmentStats;
+import net.runelite.client.game.ItemStats;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -165,7 +164,7 @@ public class FreezeCalculatorTest {
 	private void stubMagicBonus(int bonus) {
 		ItemStats stats = mock(ItemStats.class);
 		ItemEquipmentStats equipStats = mock(ItemEquipmentStats.class);
-		when(itemManager.getItemStats(anyInt(), anyBoolean())).thenReturn(stats);
+		when(itemManager.getItemStats(anyInt())).thenReturn(stats);
 		when(stats.getEquipment()).thenReturn(equipStats);
 		when(equipStats.getAmagic()).thenReturn(bonus);
 	}
