@@ -13,7 +13,7 @@
       "name": "Yrself's Toolkit",
       "request": "launch",
       "mainClass": "com.yrselfs.YrselfsToolkitPluginTest",
-      "projectName": "yrselfs-toolkit",
+      "projectName": "Yrselfs-Toolkit",
       "vmArgs": "-ea"
     }
   ]
