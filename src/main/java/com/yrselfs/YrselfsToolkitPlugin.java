@@ -88,12 +88,12 @@ public class YrselfsToolkitPlugin extends Plugin {
 
 		int regionId = client.getLocalPlayer().getWorldLocation().getRegionID();
 
-		if (isInToBOrBank(regionId)) {
+		if (isInToBOrBank(regionId) || config.showEverywhere()) {
 			if (infoBox == null) {
 				BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/nylo_icon.png");
 				if (icon != null) {
 					icon = ImageUtil.resizeImage(icon, 32, 32);
-					infoBox = new NyloFreezeInfoBox(icon, config, freezeCalculator, this);
+					infoBox = new NyloFreezeInfoBox(icon, freezeCalculator, this);
 					infoBoxManager.addInfoBox(infoBox);
 					infoBox.update();
 				} else {

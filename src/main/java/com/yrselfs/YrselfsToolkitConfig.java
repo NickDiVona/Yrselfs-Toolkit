@@ -13,9 +13,9 @@ public interface YrselfsToolkitConfig extends Config {
 	@ConfigSection(name = "ToA", description = "Tombs of Amascut", position = 1)
 	String toaSection = "toa";
 
-	@ConfigItem(keyName = "showPercentage", name = "Show Percentage", description = "Display the freeze chance percentage in an infobox", section = tobSection)
-	default boolean showPercentage() {
-		return true;
+	@ConfigItem(keyName = "showEverywhere", name = "Show Everywhere", description = "Show the freeze chance infobox regardless of location", section = tobSection)
+	default boolean showEverywhere() {
+		return false;
 	}
 
 	@ConfigItem(

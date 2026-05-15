@@ -1,6 +1,5 @@
 package com.yrselfs.nylofreeze;
 
-import com.yrselfs.YrselfsToolkitConfig;
 import com.yrselfs.YrselfsToolkitPlugin;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 
@@ -9,14 +8,12 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class NyloFreezeInfoBox extends InfoBox {
-	private final YrselfsToolkitConfig config;
 	private final FreezeCalculator freezeCalculator;
 	private int freezeChance;
 
-	public NyloFreezeInfoBox(BufferedImage image, YrselfsToolkitConfig config,
-			FreezeCalculator freezeCalculator, @Nonnull YrselfsToolkitPlugin plugin) {
+	public NyloFreezeInfoBox(BufferedImage image, FreezeCalculator freezeCalculator,
+			@Nonnull YrselfsToolkitPlugin plugin) {
 		super(image, plugin);
-		this.config = config;
 		this.freezeCalculator = freezeCalculator;
 		this.freezeChance = 0;
 	}
@@ -27,10 +24,7 @@ public class NyloFreezeInfoBox extends InfoBox {
 
 	@Override
 	public String getText() {
-		if (config.showPercentage()) {
-			return freezeChance + "%";
-		}
-		return "";
+		return freezeChance + "%";
 	}
 
 	@Override
