@@ -26,9 +26,11 @@ Runes are detected loose in your inventory, stored inside a regular Rune Pouch, 
 
 ## Thanks
 
-I appreciate the help I received from the following people when making this plugin:
+I greatly appreciate the help I received from the following people throughout the development of this plugin:
 
 - Coley
 - Bombology
-- based batt
+- Bennett
 - Gabby
+- Squish
+- Thuzd

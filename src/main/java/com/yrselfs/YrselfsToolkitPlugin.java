@@ -30,7 +30,7 @@ import java.awt.image.BufferedImage;
 	tags = {"tob", "toa", "theatre", "maiden", "freeze", "nylo", "tombs", "amascut", "thrall"}
 )
 public class YrselfsToolkitPlugin extends Plugin {
-	private static final int MAIDEN_REGION     = 12613;
+	private static final int MAIDEN_REGION = 12613;
 	private static final int VER_SINHAZA_REGION = 14642;
 
 	private static final int TOA_ENTRANCE_OBJECT_ID = 46089;
